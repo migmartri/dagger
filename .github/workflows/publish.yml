@@ -152,12 +152,12 @@ jobs:
       - name: "Setup Rust"
         uses: dtolnay/rust-toolchain@stable
 
-      - name: "ALWAYS print engine logs - especially useful on failure"
-        if: always()
+      - name: "Print Engine logs on failure"
+        if: ${{ failure() }}
         run: docker logs $(docker ps -q --filter name=dagger-engine)
 
-      - name: "ALWAYS print kernel logs - especially useful on failure"
-        if: always()
+      - name: "Print kernel logs on failure"
+        if: ${{ failure() }}
         run: sudo dmesg
 
   test-provision-go-linux:
@@ -197,11 +197,11 @@ jobs:
         run: |
           cd sdk/go
           go test -v -run TestProvision ./...
-      - name: "ALWAYS print engine logs - especially useful on failure"
-        if: always()
+      - name: "Print Engine logs on failure"
+        if: ${{ failure() }}
         run: docker logs $(docker ps -q --filter name=dagger-engine)
-      - name: "ALWAYS print kernel logs - especially useful on failure"
-        if: always()
+      - name: "Print kernel logs on failure"
+        if: ${{ failure() }}
         run: sudo dmesg
 
   test-provision-python-linux:
@@ -244,11 +244,11 @@ jobs:
           cd sdk/python
           pip install -r requirements.txt .
           pytest -xm provision
-      - name: "ALWAYS print engine logs - especially useful on failure"
-        if: always()
+      - name: "Print Engine logs on failure"
+        if: ${{ failure() }}
         run: docker logs $(docker ps -q --filter name=dagger-engine)
-      - name: "ALWAYS print kernel logs - especially useful on failure"
-        if: always()
+      - name: "Print kernel logs on failure"
+        if: ${{ failure() }}
         run: sudo dmesg
 
   test-provision-typescript-linux:
@@ -289,9 +289,9 @@ jobs:
           cd sdk/typescript
           yarn install
           yarn test -g 'Automatic Provisioned CLI Binary'
-      - name: "ALWAYS print engine logs - especially useful on failure"
-        if: always()
+      - name: "Print Engine logs on failure"
+        if: ${{ failure() }}
         run: docker logs $(docker ps -q --filter name=dagger-engine)
-      - name: "ALWAYS print kernel logs - especially useful on failure"
-        if: always()
+      - name: "Print kernel logs on failure"
+        if: ${{ failure() }}
         run: sudo dmesg
